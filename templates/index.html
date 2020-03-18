@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Amazing Books
+{% endblock %}
+{% block header %}
+<header>
+    <h1 class="main-heading">Amazing Books</h1>
+    <h2 class="main-sub-heading">The Hub For Book Lovers</h2>
+</header>
+{% endblock %}
+{% block body %}
+<div class="about-us-content">Amazing books is a book review site. Our mission is to help people find and review books they love &hearts;.</div>
+<div class="row">
+    <div id="register" class="col-lg-6 col-md-12 sign-box">
+        <div class="content-box">
+            <h3>Sign up</h3>
+            {% if (message_register) %}
+                {% if (message_danger == 1) %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message_register }}
+                    </div>
+                {% else %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message_register }}
+                    </div>
+                {% endif %}
+            {% endif %}
+            <form action="{{ url_for('register') }}" method="post">
+                <div class="form-row">
+                    <div class="col">
+                        <label for="username">User Name</label>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="username" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="password" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col">
+                        <label for="confirmpassword">Confirm Password</label>
+                        <input type="password" class="form-control" name="confirmpassword" id="confirmpassword" placeholder="confirm password" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <br>
+                        <button class="btn btn-success" type="submit">Sign up</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+  
+</div>
+{% endblock %}
