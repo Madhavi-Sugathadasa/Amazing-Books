@@ -1,0 +1,208 @@
+body {
+    background-color: #ffffff;
+    font-family: Helvetica, sans-serif;
+    font-size: 17px;
+    font-weight: 100;
+    color: #000000;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0px auto;
+    background-color: #d6f7cd;
+    padding: 20px;
+}
+
+header {
+    max-width: 1200px;
+    margin: 0px auto;
+    background-color: #32573a;
+    background-image: url(books.jpg);
+    width: 100%;
+    height: auto;
+    color: #ffffff;
+    padding: 50px;
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0px auto;
+    background-color: #32573a;
+    width: 100%;
+    height: auto;
+    color: #ffffff;
+    font-weight: 500;
+    padding: 10px;
+}
+
+footer {
+    max-width: 1200px;
+    margin: 0px auto;
+    background-color: #32573a;
+    color: #ffffff;
+    text-align: center;
+    font-weight: 500;
+    padding: 10px;
+}
+
+p {
+    margin: 0;
+}
+
+label {
+    font-weight: 500;
+}
+
+ul {
+    list-style-type: none;
+}
+
+nav a:link,
+nav a:visited {
+    color: #ffffff;
+}
+
+nav a:hover {
+    color: #d6f7cd;
+}
+
+.main-heading {
+    font-size: 20px;
+    text-align: center;
+    color: #32573a;
+    margin: 40px 20px;
+    background-color: #ffffff;
+}
+
+.main-sub-heading {
+
+    font-size: 50px;
+    text-align: center;
+    color: #ffffff;
+    margin: 50px 20px 60px;
+    background-color: #32573a;
+}
+.about-us-content{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 20px;
+    margin: 20px;
+    background-color: #6fc358;
+    border-radius: 5px;
+   
+}
+.content-box {
+    margin:10px 0;
+    padding: 20px;
+    border: 1px solid #32573a;
+    border-radius: 5px;
+}
+
+.sign-box {
+    padding: 30px;
+}
+
+.welcome-text {
+    color: #ffff00;
+}
+
+.search-box {
+    width: 600px;
+}
+
+.form-container {
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #32573a;
+    background-color: #6fc358;
+    border-radius: 5px;
+}
+
+.results-container {
+    margin: 10px;
+    padding: 20px;
+}
+.goodreads-title{
+    font-weight: 300;
+    color: rgb(54, 44, 2);
+}
+.checked {
+    color: orange;
+}
+
+.reviews-container {
+    margin: 0;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.book-title-box {
+    background-color: #6fc358;
+}
+
+.review-li {
+    padding: 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.review-li:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.review-li:nth-child(even) {
+    background-color: #a8e896;
+}
+
+@media (min-width:480px) {
+
+    .main-heading {
+        font-size: 50px;
+        margin: 40px 10px;
+
+    }
+
+    .main-sub-heading {
+        font-size: 30px;
+        margin: 50px 20px 60px;
+    }
+
+}
+
+@media (min-width:768px) {
+
+    .main-heading {
+        font-size: 70px;
+        margin: 70px 30px 40px;
+    }
+
+    .main-sub-heading {
+        font-size: 40px;
+        margin: 70px 40px 80px;
+    }
+
+    .container {
+        padding: 50px;
+    }
+    .reviews-container {
+        margin: 10px;
+    }
+
+    .content-box {
+        margin: 10px;
+    }
+}
+
+@media (min-width:1024px) {
+
+    .main-heading {
+        font-size: 100px;
+        margin: 100px 50px 60px;
+    }
+
+    .main-sub-heading {
+        font-size: 50px;
+        margin: 90px 70px 100px;
+    }
+}
