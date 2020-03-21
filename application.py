@@ -25,6 +25,9 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
+    #clear session variables
+    session["user_id"] = None
+    session["username"] = None
     return render_template("index.html")
 
 @app.route("/register", methods=["POST"])
@@ -59,3 +62,34 @@ def register():
             {"username": username, "password": password_hash.hexdigest()})
     db.commit()
     return render_template("index.html", message_register="You have successfully registered.", message_danger=0)
+
+
+@app.route("/login", methods=["POST"])
+def login():
+    """User Login"""
+    
+    username = request.form.get("username")
+    password = request.form.get("password")
+    
+    #check required fields entered
+    if username is None or (len(username.strip()) == 0):
+         return render_template("index.html", message_login="Please enter username field.")
+    if password is None or (len(password.strip()) == 0):
+         return render_template("index.html", message_login="Please enter password field.")
+    
+    #create passowrd hash
+    password_hash = hashlib.md5(password.encode())
+    
+    #make username not case sensitive
+    username = username.lower()
+    
+    user = db.execute("SELECT * FROM users WHERE username = :username AND password = :password", {"username": username, "password": password_hash.hexdigest() }).fetchone()
+    
+    if user is None:
+         return render_template("index.html", message_login = "Invalid username or password")
+    
+    #set session variables
+    session["user_id"] = user.id
+    session["username"] = user.username
+    
+    return render_template("welcome.html", username = session["username"])
