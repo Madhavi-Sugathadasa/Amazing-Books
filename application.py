@@ -28,6 +28,11 @@ def index():
     #clear session variables
     session["user_id"] = None
     session["username"] = None
+    session["book_id"] = None
+    session["work_rating_count"] = None
+    session["average_rating"] = None
+    session["average_rating_int"] = None
+    
     return render_template("index.html")
 
 @app.route("/register", methods=["POST"])
@@ -93,3 +98,17 @@ def login():
     session["username"] = user.username
     
     return render_template("welcome.html", username = session["username"])
+
+@app.route("/logout")
+def logout():
+    """User logout"""
+    
+    #clear session variables
+    session["user_id"] = None
+    session["username"] = None
+    session["book_id"] = None
+    session["work_rating_count"] = None
+    session["average_rating"] = None
+    session["average_rating_int"] = None
+    
+    return render_template("index.html")
