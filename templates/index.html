@@ -57,6 +57,41 @@ Amazing Books
         </div>
 
     </div>
-  
+    <div id="login" class="col-lg-6 col-md-12 sign-box">
+        <div class="content-box">
+            <h3>Sign in</h3>
+            {% if (message_login) %}
+                
+                <div class="alert alert-danger" role="alert">
+                    {{ message_login }}
+                </div>
+                
+            {% endif %}
+            
+            <form action="{{ url_for('login') }}" method="post">
+                <div class="form-row">
+                    <div class="col">
+                        <label for="username_sign_in">User Name</label>
+                        <input type="text" class="form-control" name="username" id="username_sign_in" placeholder="username" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label for="password_sign_in">Password</label>
+                        <input type="password" class="form-control" name="password" id="password_sign_in" placeholder="password" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <br>
+                        <button class="btn btn-success" type="submit">Sign in</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
 </div>
 {% endblock %}
