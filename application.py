@@ -112,3 +112,20 @@ def logout():
     session["average_rating_int"] = None
     
     return render_template("index.html")
+
+
+@app.route("/home")
+def home():
+    #set book id to None and other goodreads API raitings to None
+    session["book_id"] = None
+    session["work_rating_count"] = None
+    session["average_rating"] = None
+    session["average_rating_int"] = None
+    
+    #check user is logged in
+    if session["user_id"] is None:
+        return render_template("index.html")
+    
+    return render_template("welcome.html", username = session["username"])
+
+
