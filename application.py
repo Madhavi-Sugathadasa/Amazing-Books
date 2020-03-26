@@ -129,3 +129,45 @@ def home():
     return render_template("welcome.html", username = session["username"])
 
 
+@app.route("/search", methods=["POST"])
+def search():
+    """Search Books"""
+    #set book id to None and other goodreads API raitings to None
+    session["book_id"] = None
+    session["work_rating_count"] = None
+    session["average_rating"] = None
+    session["average_rating_int"] = None
+    
+    #check user is logged in
+    if session["user_id"] is None:
+        return render_template("index.html")
+    
+    search = str(request.form.get("search"))
+    search_type = request.form.get("type")
+    
+    #check search field is not empty
+    if search is None or (len(search.strip()) == 0):
+        return render_template("welcome.html", message = "Please enter search field", username = session["username"] )
+    
+    #check search type field is not empty
+    if search_type is None or (len(search_type.strip()) == 0) or (search_type != "all" and search_type != "isbn" and search_type != "author" and search_type != "title"):
+        return render_template("welcome.html", message = "Please select search type", username = session["username"] )
+
+    if (search_type == "isbn"):
+        books = db.execute("SELECT * FROM books WHERE isbn LIKE :isbn ORDER BY title", {"isbn": "%"+search+"%" }).fetchall();
+    elif (search_type == "author"):
+        books = db.execute("SELECT * FROM books WHERE LOWER(author) LIKE :author ORDER BY title", {"author": "%"+search.lower()+"%" }).fetchall();
+    elif (search_type == "title"):
+        books = db.execute("SELECT * FROM books WHERE LOWER(title) LIKE :title ORDER BY title", {"title":  "%"+search.lower()+"%"}).fetchall();
+    else:
+        books = db.execute("SELECT * FROM books WHERE isbn LIKE :isbn OR LOWER(title) LIKE :title OR LOWER(author) LIKE :author ORDER BY title", {"isbn": "%"+search+"%", "title":  "%"+search.lower()+"%", "author": "%"+search.lower()+"%" }).fetchall();
+        
+    
+    if books is None or (len(books) == 0):
+        return render_template("welcome.html", message = "Your search - \""+search+ "\" - did not match any books." , username = session["username"], search_type = search_type, search = search)
+    
+    
+    return render_template("welcome.html", message = "Search Results : "+str(len(books))+" matching books found.", books=books, username= session["username"], search_type = search_type, search = search)
+
+
+
