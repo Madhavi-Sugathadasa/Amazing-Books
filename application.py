@@ -170,4 +170,41 @@ def search():
     return render_template("welcome.html", message = "Search Results : "+str(len(books))+" matching books found.", books=books, username= session["username"], search_type = search_type, search = search)
 
 
+@app.route("/books/<int:book_id>")
+def book(book_id):
+    """Lists details about a single book."""
+
+    #check user is logged in
+    if session["user_id"] is None:
+        return render_template("index.html")
+    
+    # Make sure book exists.
+    book = db.execute("SELECT * FROM books WHERE id = :id", {"id": book_id}).fetchone()
+    if book is None:
+        return render_template("error.html", message="No results Found.", username= session["username"])
+
+    # Get all reviews with user for each review
+    reviews = db.execute("SELECT review, rating, username FROM reviews JOIN users ON reviews.user_id = users.id WHERE book_id = :book_id",{"book_id": book.id}).fetchall()
+    
+    #check ratings on goodreads API
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": os.getenv("GOODREADS_API_KEY"), "isbns": book.isbn})
+    if res.status_code != 200:
+        raise Exception("ERROR: API request unsuccessful.")
+    data = res.json()
+   
+    #read json
+    work_rating_count= data["books"][0]["work_ratings_count"]
+    average_rating= data["books"][0]["average_rating"]
+    average_rating_int = int(floor(float(average_rating)))
+    
+    work_rating_count =format(int(work_rating_count), ',d')
+    
+    session["book_id"] = book.id
+    session["work_rating_count"] = work_rating_count
+    session["average_rating"] = average_rating
+    session["average_rating_int"] = average_rating_int
+
+    return render_template("book.html", book=book, reviews=reviews, work_rating_count=work_rating_count, average_rating=average_rating, average_rating_int=average_rating_int, username= session["username"])
+    
+
 
