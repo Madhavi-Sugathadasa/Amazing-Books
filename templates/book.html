@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Book Details
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="content-box book-title-box">
+            <h2>{{ book.title }}</h2>
+            <ul>
+                <li>ISBN: {{ book.isbn }}</li>
+                <li>Author: {{ book.author}}</li>
+                <li>Year Published: {{ book.year}}</li>
+            </ul>
+        </div>
+        <div class="content-box">
+            <h4><span class="goodreads-title">good<strong>Reads</strong></span> Rating:</h4>
+            <ul>
+                <li>
+                    {%for i in range(0, average_rating_int)%}
+                    <span class="fa fa-star checked"></span>
+                    {% endfor %}
+                    {%for i in range(0, 5 - average_rating_int)%}
+                    <span class="fa fa-star"></span>
+                    {% endfor %}
+                </li>
+                <li><strong>{{average_rating}}</strong> average based on <strong>{{work_rating_count}}</strong> reviews.</li>
+               
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="content-box">
+            <h4>Write a review</h4>
+            <div>
+                {% if (message) %}
+                {% if (message_danger == 1) %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+                {% else %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+                {% endif %}
+                {% endif %}
+
+
+                <form action="{{ url_for('review') }}" method="post">
+                    <textarea placeholder="write your review here" name="review" class="form-control" required></textarea>
+                    <br>
+                    <p>Rate this book:</p>
+                    <ul>
+                        <li> <input type="radio" id="1" name="rating" value="1" checked>
+                            <label for="1"><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></label></li>
+                        <li><input type="radio" id="2" name="rating" value="2">
+                            <label for="2"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></label></li>
+                        <li><input type="radio" id="3" name="rating" value="3">
+                            <label for="3"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></label></li>
+                        <li> <input type="radio" id="4" name="rating" value="4">
+                            <label for="4"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span></label></li>
+                        <li><input type="radio" id="5" name="rating" value="5">
+                            <label for="5"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span></label></li>
+                    </ul>
+                    <button class="btn btn-success" type="submit">Submit your review</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="reviews-container">
+    <h4>Community Reviews:</h4>
+    <ul>
+        {% for review in reviews %}
+        <li class="review-li"><strong>{{ review.username }}</strong> rated it
+            {%for i in range(0, review.rating)%}
+            <span class="fa fa-star checked"></span>
+            {% endfor %}
+            {%for i in range(0, 5 - review.rating)%}
+            <span class="fa fa-star"></span>
+            {% endfor %}
+
+            <br> {{ review.review }} </li>
+        {% else %}
+        <li>No reviews.</li>
+        {% endfor %}
+    </ul>
+
+</div>
+{% endblock %}
