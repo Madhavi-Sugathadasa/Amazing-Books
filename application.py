@@ -255,6 +255,35 @@ def review():
     #return to book detail page
     return render_template("book.html", book=book, reviews=reviews, work_rating_count=work_rating_count, average_rating=average_rating, average_rating_int=average_rating_int, message = "Your review has been added.",  username= session["username"], message_danger=0)
 
+
+@app.route("/api/<isbn>")
+def book_api(isbn):
+    """Books API"""
+
+    # Make sure book exists.
+    book = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()
+    if book is None:
+        return jsonify({"error": "ISBN not found"}), 404
+    #get review count   
+    review_count = db.execute("SELECT * FROM reviews WHERE book_id = :book_id", {"book_id": book.id}).rowcount
+    #get average count    
+    average_score = db.execute("SELECT AVG(rating) FROM reviews WHERE book_id = :book_id", {"book_id": book.id}).fetchone()
+    print(list(average_score))
+    if average_score.avg is None:
+        average_score = 0
+    
+    #round average score to two decimal points
+    if (average_score != 0):
+        average_score = round(float(average_score.avg), 2)
+    
+    return jsonify ({
+        "title": book.title,
+        "author": book.author,
+        "year": book.year,
+        "isbn": book.isbn,
+        "review_count": review_count, 
+        "average_score": average_score
+    })
     
 
 
