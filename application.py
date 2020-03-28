@@ -205,6 +205,56 @@ def book(book_id):
     session["average_rating_int"] = average_rating_int
 
     return render_template("book.html", book=book, reviews=reviews, work_rating_count=work_rating_count, average_rating=average_rating, average_rating_int=average_rating_int, username= session["username"])
+
+
+@app.route("/review", methods=["POST"])
+def review():
+    """Add a review"""
+
+    user_id = session["user_id"]
+    #if session expired
+    if session["user_id"] is None:
+        return render_template("index.html")
+    book_id = session["book_id"]
+    
+    book = db.execute("SELECT * FROM books WHERE id = :id", {"id": book_id}).fetchone()
+    if book is None:
+        return render_template("error.html", message="No Results Found.", username= session["username"])
+    
+    # Get all reviews.
+    reviews = db.execute("SELECT review, rating, username FROM reviews JOIN users ON reviews.user_id = users.id WHERE book_id = :book_id",{"book_id": book.id}).fetchall()
+    
+    #get ratings on goodreads API from session
+    work_rating_count = session["work_rating_count"]
+    average_rating = session["average_rating"]
+    average_rating_int = session["average_rating_int"]
+    
+    
+    
+    if db.execute("SELECT * FROM reviews WHERE book_id = :book_id AND user_id = :user_id", {"book_id": book_id , "user_id": user_id}).rowcount > 0:
+        return render_template("book.html", book=book, reviews=reviews, work_rating_count=work_rating_count, average_rating=average_rating, average_rating_int=average_rating_int, message="You have already added a review for this book.",  username= session["username"], message_danger=1)
+    
+     #get the review text from request
+    review = request.form.get("review")
+    if review is None or (len(review.strip()) == 0):
+        session["book_id"] = book_id
+        return render_template("book.html", book=book, reviews=reviews, work_rating_count=work_rating_count, average_rating=average_rating, average_rating_int=average_rating_int, message = "Please enter your review text.", username= session["username"], message_danger=1)
+    rating = request.form.get("rating")
+    #get the star rating from request
+    if rating is None or (int(rating) > 5) or (int (rating) <1):
+        session["book_id"] = book_id
+        return render_template("book.html", book=book, reviews=reviews, work_rating_count=work_rating_count, average_rating=average_rating, average_rating_int=average_rating_int, message = "Please enter a valid star rating between 1 and 5 Inclusive.",  username= session["username"], message_danger=1)
+    
+    db.execute("INSERT INTO reviews (review, rating, book_id, user_id) VALUES (:review, :rating, :book_id, :user_id)",
+            {"review": review, "rating": rating, "book_id": book_id, "user_id": user_id})
+    db.commit()
+    
+    #get upto date reviews with the newly added one
+    reviews = db.execute("SELECT review, rating, username FROM reviews JOIN users ON reviews.user_id = users.id WHERE book_id = :book_id",{"book_id": book.id}).fetchall()
+    
+    #return to book detail page
+    return render_template("book.html", book=book, reviews=reviews, work_rating_count=work_rating_count, average_rating=average_rating, average_rating_int=average_rating_int, message = "Your review has been added.",  username= session["username"], message_danger=0)
+
     
 
 
