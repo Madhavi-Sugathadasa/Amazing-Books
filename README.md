@@ -1,4 +1,4 @@
-# Amazing_Books
+# Amazing Books
 Created a book review website named Amazing books using **python, flask, SQLAlchemy, HTML, CSS and Bootstrap**.
 
 ---
@@ -8,6 +8,40 @@ In this project, I built a book review website. Users will be able to register f
 View screencast on https://www.youtube.com/watch?v=31iCJzzbng4
 
 ---
+###Features
+
+1. **Registration**: Users will be able to register for the website, providing (at minimum) a username and password. 
+
+2. **Login**: Users, once registered, will be able to log in to the website with their username and password.
+
+3. **Logout**: Logged in users will be able to log out of the site.
+
+4. **Import**: There is a file called books.csv , which is a spreadsheet in CSV format of 5000 different books. Each one has an ISBN number, a title, an author, and a publication year. In a Python file called import.py separate from the web application, wrote a program that will take the books and import them into the PostgreSQL database. Run this program by running python3 import.py to import the books into the database.
+
+5. **Search**: Once a user has logged in, they will be taken to a page where they can search for a book. Users will be able to type in the ISBN number of a book, the title of a book, or the author of a book. After performing the search, the website should display a list of possible matching results, or a message if there were no matches. If the user typed in only part of a title, ISBN, or author name, the search page will find matches for those as well!
+
+6. **Book Page**: When users click on a book from the results of the search page, they will be taken to a book page, with details about the book: its title, author, publication year, ISBN number, and any reviews that users have left for the book on your website.
+
+7. **Review Submission**: On the book page, users will be able to submit a review: consisting of a rating on a scale of 1 to 5, as well as a text component to the review where the user can write their opinion about a book. Users will not be able to submit multiple reviews for the same book.
+
+8. **Goodreads Review Data**: On the book page, (if available) the average rating and number of ratings the work has received from Goodreads will be displayed.
+
+9. **API Access**: If users make a GET request to the website’s /api/<isbn> route, where <isbn> is an ISBN number, your website should return a JSON response containing the book’s title, author, publication date, ISBN number, review count, and average score. The resulting JSON should follow the format:
+
+```
+    {
+      "title": "Memory", 
+      "author": "XXX XXX", 
+      "year": 2015,
+      "isbn": "1632168146", 
+      "review_count": 28, 
+      "average_score": 5.0
+    }
+```
+If the requested ISBN number isn’t in your database, the website will return a 404 error.
+
+---
+
 **create.sql** file - 3 tables were used in my database namely users, books and reviews. The file includes SQL commands to create those 3 tables with relevant relationships.
 
 ---
