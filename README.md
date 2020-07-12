@@ -5,6 +5,8 @@ Created a book review website named Amazing books using **python, flask, SQLAlch
 In this project, I built a book review website. Users will be able to register for the website and then log in using their username and password. Once they log in, they will be able to search for books, leave reviews for individual books, and see the reviews made by other people. I also used the a **third-party API by Goodreads**, another book review website, to pull in ratings from a broader audience. Finally, users will be able to query for book details and book reviews programmatically via the website’s API.
 
 
+View screencast on https://www.youtube.com/watch?v=31iCJzzbng4
+
 ---
 **create.sql** file - 3 tables were used in my database namely users, books and reviews. The file includes SQL commands to create those 3 tables with relevant relationships.
 
@@ -79,5 +81,4 @@ Note: All pages are responsive, Bootstrap components were used
 
 ---
 
-[Link to screencast](https://www.youtube.com/watch?v=31iCJzzbng4) or View web app on action https://www.youtube.com/watch?v=31iCJzzbng4
 
