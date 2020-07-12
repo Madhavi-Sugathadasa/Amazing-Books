@@ -8,7 +8,7 @@ In this project, I built a book review website. Users will be able to register f
 View screencast on https://www.youtube.com/watch?v=31iCJzzbng4
 
 ---
-###Features
+### Features
 
 1. **Registration**: Users will be able to register for the website, providing (at minimum) a username and password. 
 
