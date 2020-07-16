@@ -1,4 +1,4 @@
-# Amazing Books
+# Amazing Books :books:
 Created a book review website named Amazing books using **python, flask, SQLAlchemy, HTML, CSS and Bootstrap**.
 
 ---
